@@ -13,10 +13,11 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - name: Unpack newest zip
+      - name: Unpack newest project ZIP
         run: |
           z=$(git -c core.quotepath=off log -1 --name-only --pretty=format: -- '*.zip' | head -1)
-          echo "Using: $z"
+          test -n "$z"
+          rm -rf app build.gradle.kts settings.gradle.kts gradle.properties
           unzip -oq "$z"
       - uses: gradle/actions/setup-gradle@v4
         with:
